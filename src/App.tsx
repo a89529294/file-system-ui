@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import IconButton from "./components/IconButton";
+import LeftPanel from "./components/LeftPanel";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto">
+      <div className="grid grid-rows-[auto_minmax(400px,1fr)] grid-cols-[min(250px)_1fr]">
+        <div className="bg-gray-50 col-span-2 p-3 flex gap-6">
+          <IconButton icon="folder" label="New folder" />
+          <IconButton icon="upload" fill={false} label="Upload" />
+          <IconButton icon="refresh" fill={false} label="Refresh" />
+        </div>
+        <LeftPanel />
+      </div>
     </div>
   );
 }
