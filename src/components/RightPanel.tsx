@@ -30,8 +30,10 @@ const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
         <span>{name}</span>
       </div>
       <div
-        className={`px-4 ml-auto text-gray-500 flex-[2] ${
-          isHeader ? "text-tableHeader" : "text-tableCellModified"
+        className={`px-4 ml-auto flex-[2] ${
+          isHeader
+            ? "text-tableHeader text-gray-500"
+            : "text-tableCellModified text-gray-700"
         }`}
       >
         {date}

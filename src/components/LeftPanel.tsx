@@ -108,7 +108,7 @@ const LeftPanel = ({
   setFolderStatusArray: Function;
 }) => {
   return (
-    <ul className="border-r-[1px] border-gray-200 select-none relative">
+    <ul className="border-r-[1px] border-gray-200 select-none relative pl-3">
       <FolderRow
         folder={rootFolder}
         folderStatusArray={folderStatusArray}
