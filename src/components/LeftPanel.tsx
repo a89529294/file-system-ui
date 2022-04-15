@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { ChevronRight, ChevronDown, Folder as FolderIcon } from "react-feather";
 
-import { Folder, FolderStatus, Asset } from "../types";
+import { Folder, FolderStatus, Asset, ResourceType } from "../types";
 
 //name of folders should be unique
 
@@ -14,13 +14,14 @@ const FolderRow = ({
   setFolderStatusArray: Function;
   folderStatusArray: FolderStatus[];
 }) => {
-  if (folder.type === "asset") return null;
+  if (folder.type === ResourceType.asset) return null;
 
   const currentFolderStatus = folderStatusArray.find(
     (folderStatus) => folderStatus.name === folder.name
   );
   const currentFolderContainsSubFolders =
-    folder.content.filter((item) => item.type === "folder").length > 0;
+    folder.content.filter((item) => item.type === ResourceType.folder).length >
+    0;
 
   const render = (content: Folder["content"]) => {
     return (
@@ -97,34 +98,15 @@ const FolderRow = ({
   );
 };
 
-const LeftPanel = () => {
-  const [rootFolder, setRootFolder] = useState<Folder>({
-    type: "folder",
-    name: "Root Folder",
-    content: [
-      {
-        type: "folder",
-        name: "Documents",
-        content: [
-          { type: "folder", name: "Documents - 1", content: [] },
-          { type: "asset", name: "2000-diary.txt" },
-        ],
-      },
-      {
-        type: "folder",
-        name: "Music",
-        content: [{ type: "asset", name: "song.mp3" }],
-      },
-    ],
-  });
-  const [folderStatusArray, setFolderStatusArray] = useState<FolderStatus[]>([
-    { name: "Root Folder", showSubFolders: false, selected: false },
-    { name: "Documents", showSubFolders: false, selected: false },
-    { name: "Documents - 1", showSubFolders: false, selected: false },
-    { name: "Documents - 2", showSubFolders: false, selected: false },
-    { name: "Music", showSubFolders: false, selected: false },
-  ]);
-
+const LeftPanel = ({
+  rootFolder,
+  folderStatusArray,
+  setFolderStatusArray,
+}: {
+  rootFolder: Folder;
+  folderStatusArray: FolderStatus[];
+  setFolderStatusArray: Function;
+}) => {
   return (
     <ul className="border-r-[1px] border-gray-200 select-none relative">
       <FolderRow
