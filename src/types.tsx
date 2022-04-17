@@ -28,4 +28,5 @@ export type TableRowProps = {
   isHeader: false;
   name: string;
   date: string;
+  type: ResourceType;
 };

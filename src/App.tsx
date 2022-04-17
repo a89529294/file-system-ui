@@ -10,7 +10,8 @@ import { parentFolder } from "./data";
 import { initFolderStatusArray } from "./utils";
 
 const arr: FolderStatus[] = [];
-const value = initFolderStatusArray(arr, parentFolder);
+// const value = initFolderStatusArray(arr, parentFolder);
+const value = initFolderStatusArray(parentFolder);
 
 function App() {
   const [rootFolder, setRootFolder] = useState<Folder>(parentFolder);
@@ -30,7 +31,10 @@ function App() {
           folderStatusArray={folderStatusArray}
           setFolderStatusArray={setFolderStatusArray}
         />
-        <RightPanel />
+        <RightPanel
+          rootFolder={rootFolder}
+          folderStatusArray={folderStatusArray}
+        />
       </div>
     </div>
   );

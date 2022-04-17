@@ -1,21 +1,30 @@
 import React, { useRef } from "react";
-import { Folder, Search } from "react-feather";
+import { Folder as FolderIcon, Search, FileText } from "react-feather";
 
-import { TableRowHeaderProps, TableRowProps } from "../types";
+import {
+  Folder,
+  FolderStatus,
+  ResourceType,
+  TableRowHeaderProps,
+  TableRowProps,
+} from "../types";
+import { findFolder } from "../utils";
 
 const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
   const isHeader = props.isHeader;
-  let name, date, size;
+  let name, date, size, type;
   switch (props.isHeader) {
     case true:
       name = "Name";
       date = "Modified";
       size = "Size";
+      type = ResourceType.folder;
       break;
     case false:
       name = props.name;
       date = props.date;
       size = "";
+      type = props.type;
       break;
   }
 
@@ -26,7 +35,12 @@ const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
           isHeader ? "font-medium text-tableHeader" : "text-tableCellName"
         }`}
       >
-        <Folder size={20} />
+        {type === ResourceType.folder ? (
+          <FolderIcon size={20} />
+        ) : (
+          <FileText size={20} />
+        )}
+
         <span>{name}</span>
       </div>
       <div
@@ -49,17 +63,35 @@ const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
   );
 };
 
-const Table = () => {
+const Table = ({ selectedFolder }: { selectedFolder: Folder | null }) => {
   return (
     <div className="">
       <TableRow isHeader={true} />
-      <TableRow isHeader={false} name="Documents" date="April 15, 2022" />
+      {selectedFolder?.content.map((asset) => (
+        <TableRow
+          isHeader={false}
+          type={asset.type}
+          name={asset.name}
+          date="April 15, 2022"
+          key={asset.name}
+        />
+      ))}
     </div>
   );
 };
 
-const RightPanel = () => {
+const RightPanel = ({
+  rootFolder,
+  folderStatusArray,
+}: {
+  rootFolder: Folder;
+  folderStatusArray: FolderStatus[];
+}) => {
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const selectedFolderName = folderStatusArray.find(
+    (folder) => folder.selected
+  )?.name;
+  const selectedFolder = findFolder(rootFolder, selectedFolderName);
 
   return (
     <div className="select-none">
@@ -75,7 +107,7 @@ const RightPanel = () => {
           <label className="absolute inset-0 flex translate-y-1 border-gray-400 pointer-events-none peer-focus:border-b-2 peer-hover:border-b-2" />
         </div>
       </div>
-      <Table />
+      <Table selectedFolder={selectedFolder} />
     </div>
   );
 };

@@ -34,13 +34,9 @@ export const parentFolder = {
         { type: ResourceType.asset as const, name: "song - 2.mp3" },
       ],
     },
+    {
+      type: ResourceType.asset as const,
+      name: "My secret plan.txt",
+    },
   ],
 };
-
-// [
-//   { name: "Root Folder", showSubFolders: false, selected: false },
-//   { name: "Documents", showSubFolders: false, selected: false },
-//   { name: "Documents - 1", showSubFolders: false, selected: false },
-//   { name: "Documents - 2", showSubFolders: false, selected: false },
-//   { name: "Music", showSubFolders: false, selected: false },
-// ]
