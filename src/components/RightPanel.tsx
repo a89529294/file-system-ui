@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Folder as FolderIcon, Search, FileText } from "react-feather";
 
 import {
@@ -11,6 +11,8 @@ import {
 import { findFolder } from "../utils";
 
 const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
+  const [selected, setSelected] = useState(false);
+
   const isHeader = props.isHeader;
   let name, date, size, type;
   switch (props.isHeader) {
@@ -29,7 +31,27 @@ const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
   }
 
   return (
-    <div className="flex px-8 py-2 border-b-[1px] border-gray-200">
+    <div
+      className={`flex py-2 border-b-[1px] border-gray-200 ${
+        isHeader
+          ? "bg-gray-50 hover:bg-gray-100"
+          : selected
+          ? "bg-blue-100"
+          : "hover:bg-gray-100"
+      }`}
+    >
+      <div className="grid place-items-center w-9">
+        <div
+          className={`grid place-items-center w-4 h-4 hover:outline hover:outline-black hover:outline-1 `}
+          onClick={() => setSelected((selected) => !selected)}
+        >
+          {selected && (
+            <span className="grid w-full h-full leading-4 text-white bg-blue-500 place-items-center">
+              ✓
+            </span>
+          )}
+        </div>
+      </div>
       <div
         className={`flex gap-4 flex-[7] ${
           isHeader ? "font-medium text-tableHeader" : "text-tableCellName"
@@ -40,7 +62,6 @@ const TableRow = (props: TableRowHeaderProps | TableRowProps) => {
         ) : (
           <FileText size={20} />
         )}
-
         <span>{name}</span>
       </div>
       <div

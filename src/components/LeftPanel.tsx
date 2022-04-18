@@ -73,7 +73,7 @@ const FolderRow = ({
         <div
           className={`${
             currentFolderStatus?.selected
-              ? "bg-gray-300"
+              ? "bg-blue-100"
               : "group-hover:bg-gray-100"
           } absolute left-0 right-0 h-10 -z-10 `}
         />
