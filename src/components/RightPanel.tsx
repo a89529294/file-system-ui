@@ -92,6 +92,7 @@ const RightPanel = ({
     (folder) => folder.selected
   )?.name;
   const selectedFolder = findFolder(rootFolder, selectedFolderName);
+  console.log(selectedFolder);
 
   return (
     <div className="select-none">

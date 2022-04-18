@@ -43,10 +43,23 @@ export function initFolderStatusArray(folder: Folder) {
   return initialFolderStatusArray;
 }
 
-export function findFolder(folder: Folder, name: string | undefined) {
-  if (folder.name === name) return folder;
-  for (const resource of folder.content) {
-    if (resource.type === ResourceType.folder) findFolder(resource, name);
+export function findFolder(
+  folder: Folder,
+  name: string | undefined
+): Folder | null {
+  const arr: Folder[] = [];
+
+  function findFolderRecursive(folder: Folder, name: string | undefined) {
+    if (folder.name === name) {
+      arr.push(folder);
+    } else {
+      for (const resource of folder.content) {
+        if (resource.type === ResourceType.folder)
+          findFolderRecursive(resource, name);
+      }
+    }
   }
-  return null;
+
+  findFolderRecursive(folder, name);
+  return arr.length ? arr[0] : null;
 }
